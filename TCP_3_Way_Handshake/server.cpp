@@ -97,7 +97,7 @@ int main() {
 
 
 
-
-    close(server_listening_socket);
+    close(connection_socket); // Closing the Connection Socket, Welcome Socket is still open and can accept more clients. If we close Welcome Socket, then no more clients can connect to this server. So we are only closing the Connection Socket which is used for Data Transfer with this particular client. Welcome Socket is still open and listening for new clients.
+    close(server_listening_socket); // Closing the Welcome Socket, now no more clients can connect to this server. We are doing this just for cleanup, in real world servers, welcome socket is not closed and kept open to accept more clients.
     return 0;  
 }
