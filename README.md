@@ -13,17 +13,7 @@ Welcome! This repo has the seeds of a Dedicated Chat Application written in C++,
 I wanted a practical way to learn networking beyond theory and textbooks. Building a chat application is a perfect playground for TCP/UDP concepts, concurrency, and low-level system programming — and it’s fun to build!
 
 ## Future plans ✨
-I plan to evolve this into a full-fledged Dedicated Chat Application in C++ with features like:
-
-- Multi-client support with a robust server (thread-per-client or event-driven)
-- User authentication & simple nicknames
-- Private messages and chat rooms
-- Message history persistence (simple file or lightweight DB)
-- Clean command-line client UI and optional GUI later
-- TLS/SSL support for encrypted transport
-- Tests, CI, and docs
-
-If it grows big enough, I might split modules, add a build system, and make cross-platform binaries.
+I'll focus on Ping-Pong chat first, then use Concurrency concepts for multiclient support and more cool things.
 
 ## Quick start (how I test builds locally) 🛠️
 Compile server and client with g++:
