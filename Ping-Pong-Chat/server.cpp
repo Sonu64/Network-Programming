@@ -9,8 +9,8 @@ using namespace std;
 int main() {
 
     // Creating server socket
-    int server_socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-    if (server_socket < 0) {
+    int server_listening_socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    if (server_listening_socket < 0) {
         cerr << "Failed to create socket" << endl;
         return 1;
     }
@@ -25,7 +25,7 @@ int main() {
 
 
     // Bind socket to the address
-    int result = bind(server_socket, (sockaddr*)&server_address, sizeof(server_address));
+    int result = bind(server_listening_socket, (sockaddr*)&server_address, sizeof(server_address));
     if (result < 0) {
         cout << "Bind Failed :(\n";
         return 1;
@@ -35,7 +35,7 @@ int main() {
 
 
     // Start listening for incoming connections
-    int listen_result = listen(server_socket, SOMAXCONN);
+    int listen_result = listen(server_listening_socket, SOMAXCONN);
     if (listen_result < 0) {
         cout << "Server Listen Failed. Welcome Socket can't be initialized !\n";
         return 1;
@@ -47,9 +47,9 @@ int main() {
     // Accept a client connection (blocking code)
     sockaddr_in client_address;
     socklen_t client_size = sizeof(client_address);
-    int client_socket = accept(server_socket, (sockaddr*)&client_address, &client_size);
+    int connection_socket = accept(server_listening_socket, (sockaddr*)&client_address, &client_size);
 
-    if (client_socket < 0) {
+    if (connection_socket < 0) {
         cout << "Accept Failed :(\n";
         return 1;
     } else {
@@ -70,18 +70,18 @@ int main() {
 
     // Receiving clients msg
     char buffer[1024] = {0};
-    recv(client_socket, buffer, sizeof(buffer), 0);
+    recv(connection_socket, buffer, sizeof(buffer), 0);
     cout << "\nClient says: " << buffer << endl;
 
     // Sending Reply
     string reply = "Hmm Client Bhai, Kaan Khule hai mere !";
-    send(client_socket, reply.c_str(), reply.size(), 0);
+    send(connection_socket, reply.c_str(), reply.size(), 0);
     cout << "You said: " << reply << endl;
     cout << "\nClosing Connection For Now. Goodbye !\n\n";
 
 
     // Close the both sockets
-    close(server_socket);
-    close(client_socket);
+    close(server_listening_socket);
+    close(connection_socket);
     return 0;
 }

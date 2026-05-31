@@ -8,9 +8,9 @@ using namespace std;
 int main() {
 
     // Step1 --> Creating the TCP Endpoint
-    int server_socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP); //TCP Socket, IPv4, IPPROTO_TCP is the number (stored as enum) for Protocol Type in IP Header, 6 for TCP, 17 for UDP
+    int server_listening_socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP); //TCP Socket, IPv4, IPPROTO_TCP is the number (stored as enum) for Protocol Type in IP Header, 6 for TCP, 17 for UDP
 
-    if (server_socket < 0) {
+    if (server_listening_socket < 0) {
         cerr << "Failed to create socket" << endl;
         return 1;
     }
@@ -34,7 +34,7 @@ int main() {
     /* @param3 = sizeof(server_address) is to tell Linux and the bind() function how  many bytes should it read. 
     */
 
-    int result = bind (server_socket, (sockaddr*)&server_address, sizeof(server_address));
+    int result = bind (server_listening_socket, (sockaddr*)&server_address, sizeof(server_address));
 
     if (result < 0) {
         cout << "Bind Failed :(\n";
@@ -50,7 +50,7 @@ int main() {
     // Function prototype :- listen(int sockfd, int backlog);
     // @param1 = sockfd: It should be the socket returned by socket() and already bound by bind()
    // @param2 = backlog: This value is for the Queue Size for Pending Client Connections. SOMAXCONN is for the max Size allowable by OS.
-    int listen_result = listen(server_socket, SOMAXCONN);
+    int listen_result = listen(server_listening_socket, SOMAXCONN);
 
     if (listen_result < 0) {
         cout << "Server Listen Failed. Welcome Socket can't be initialized !\n";
@@ -70,11 +70,11 @@ int main() {
     // Variable 2: Size variable, to tell Linux how much size os available in client_address. After the call Linux will update it with the Actual Size used.
     socklen_t client_size = sizeof(client_address);
     // See in the below function client_address and client_size are passed as &client_address an &client_size so that Linux can write into those addresses !!!!!! THIS IS IMPORTANT TO UNDERSTAND. So after accept returns, Linux updates client_address and client_size with exact client information.
-    int client_socket = accept(server_socket, (sockaddr*)&client_address, &client_size);
+    int connection_socket = accept(server_listening_socket, (sockaddr*)&client_address, &client_size);
     // Now this is a Blocking Call, so Server is waiting for a Client to connect... 
     //.... Client needs to send connection requests to this Server now.
 
-    if(client_socket < 0) {
+    if(connection_socket < 0) {
         cout << "Accept Failed :(\n";
         return 1;
     }
@@ -98,6 +98,6 @@ int main() {
 
 
 
-    close(server_socket);
+    close(server_listening_socket);
     return 0;  
 }
