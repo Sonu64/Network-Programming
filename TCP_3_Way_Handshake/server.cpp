@@ -84,6 +84,7 @@ int main() {
 
     // Printing Client Information, we need to convert OS written IP in client_address.sin_addr to human-readable format. This is just the reverse of inet_pton().
     char client_ip[INET_ADDRSTRLEN];
+    
     inet_ntop(AF_INET,
             &client_address.sin_addr,
             client_ip,
