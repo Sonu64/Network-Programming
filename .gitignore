@@ -1,0 +1,44 @@
+ # Build artifacts
+*.o
+*.obj
+*.a
+*.so
+*.dylib
+*.dll
+*.exe
+*.out
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake-build-*/
+Makefile
+cmake_install.cmake
+compile_commands.json
+
+# Build directories
+build/
+bin/
+dist/
+debug/
+release/
+
+# IDE/editor files
+.vscode/
+.idea/
+*.code-workspace
+
+# Generated files
+*.log
+*.tmp
+*.swp
+*.swo
+
+# Dependency/package managers
+conanbuildinfo.*
+conan.lock
+vcpkg_installed/
+
+# OS files
+.DS_Store
+Thumbs.db
